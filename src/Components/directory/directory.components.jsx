@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuItem } from '../menu-item/menu-item.components';
+import MenuItem from '../menu-item/menu-item.components';
 import './directory.styles.scss';
 
 export class Directory extends React.Component {
@@ -45,12 +45,27 @@ export class Directory extends React.Component {
 
     render() {
         return(
-            <div className="directory-menu">
-              {this.state.section.map(({title, id, imageUrl, size}) => (
-                  <MenuItem key ={id} title ={title} imageUrl= {imageUrl} size={size}/>
-        ))}
+          <div className="directory-menu">
+          {this.state.section.map(({id, ...otherSectionProps}) => (
+              <MenuItem key ={id} {...otherSectionProps}/>
+              ))}
            </div>
         )
     }
 }
  
+//comment section
+//... is called spread operator
+// return(
+//   <div className="directory-menu">
+//     {this.state.section.map(({id, ...otherSectionProps}) => (
+//         <MenuItem key ={id} {...otherSectionProps}/>
+// ))}
+//  </div>
+// )
+// this is equivalent to this
+// <div className="directory-menu">
+//     {this.state.section.map(({id, ...otherSectionProps}) => (
+//         <MenuItem key ={id} {...otherSectionProps}/>
+// ))}
+//  </div>

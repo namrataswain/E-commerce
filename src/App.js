@@ -5,7 +5,7 @@ import HomePage from './Pages/homepage/homepage.components';
 
 const HatsPage = () =>(
   <div>
-  <h1>HATS PAGE</h1>
+  <h1>HATS PAGEs</h1>
   </div>
 )
 
@@ -14,7 +14,7 @@ function App() {
     <div className="App">
     <Switch>
     <Route exact path='/' component={HomePage}/>
-      <Route  path='/hats' component = {HatsPage}/>
+      <Route  path='/shop/hats' component = {HatsPage}/>
     </Switch>
       
     </div>
