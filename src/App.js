@@ -6,21 +6,16 @@ import ShopPage from "./Pages/shop/shop.component";
 import SignInAndSignUpPage from "./Pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 import Header from "./Components/Header/header-component";
 import { auth , createUserProfileDocument} from "./firebase/firebase.utils";
-
+import {connect} from 'react-redux';
+import { setCurrentUser } from './redux/user/user-action';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentUser : null
-    }
-  }
-
+  
    unsubscribeFromAuth = null;
 
   componentDidMount() {
 
+    const {setCurrentUser}  = this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth => {
       // createUserProfileDocument(user); //storing the data of the user into the firestore
       // //next is to think about storing data into the state of the component of our app
@@ -30,17 +25,17 @@ class App extends React.Component {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot(snapShot => { //listens to the userRef and get the first state of the userRef
-          this.setState({ //setState is asynchronous
-            currentUser :{
+          setCurrentUser({ //setState is asynchronous
+            
               id : snapShot.id,
               ...snapShot.data()
-              }
+              
           })
           
         })  ;       
       }
       else {
-        this.setState({currentUser : userAuth})
+        setCurrentUser(userAuth);
       }
 
 
@@ -66,4 +61,9 @@ class App extends React.Component {
   }
 }
 
-export default App;
+
+const mapDispatchToProps = dispatch  => ({
+  setCurrentUser : user => dispatch(setCurrentUser(user))
+})
+
+export default connect(null, mapDispatchToProps)(App);
