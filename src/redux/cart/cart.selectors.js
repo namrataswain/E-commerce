@@ -1,6 +1,7 @@
 // 2 types of selectors : input selectors and output selectors
 import { createSelector } from "reselect";
 
+
 //input selector is a function which gets the whole state and returns the slice of the state
 
 const selectCart = (state) => state.cart;
@@ -23,4 +24,14 @@ export const selectCartItemsCount = createSelector(
         accumulatedQuantity + cartItem.quantity,
       0
     )
+);
+
+export const selectCartTotal = createSelector(
+  [selectCartItems],
+  (cartItems) =>
+  cartItems.reduce(
+    (accumulatedTotal, cartItem) => 
+    accumulatedTotal + cartItem.quantity * cartItem.price, 
+    0
+  )
 );
