@@ -67,6 +67,25 @@ const config =
 
   };
 
+export const convertCollectionsSnapshotToMap = (collections) => {
+    const transformedCollections = collections.docs.map(doc =>{
+      const {title, items} = doc.data();
+      return {
+        routeName : encodeURI(title.toLowerCase()),
+        id : doc.id,
+        title, 
+        items
+      };
+    });
+   
+   //convert it into objects
+   return transformedCollections.reduce((accumulator, collection) =>{
+    accumulator[collection.title.toLowerCase()] = collection
+    return accumulator;
+   }, {}); 
+
+  } 
+
   export const auth = firebase.auth();
   export const firestore = firebase.firestore();
 
